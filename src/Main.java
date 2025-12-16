@@ -94,7 +94,11 @@ class Array {
 
             switch (vrstaUrejanja) {
                 case "insert":
-                    insertionSort(nacinIzpisa, vrstaIzpisa, arr);
+                    if(nacinIzpisa.equals("trace")) {
+                        insertionSort(nacinIzpisa, vrstaIzpisa, arr);
+                    }else if(nacinIzpisa.equals("count")) {
+                        insertionCount(nacinIzpisa,vrstaIzpisa, arr);
+                    }
                     break;
                 case "select":
                     break;
@@ -143,42 +147,10 @@ class Array {
         }
 
         public static void insertionSort(String nacin, String izpis, Array arr) {
-            if (nacin.equals("trace")) {
                 if (izpis.equals("up")) {
-                    arr.print(0);//10 27 42 17 58 39 91 19 42 66
-                    for (int i = 1; i < arr.size(); i++) {//i==2
-                        int k = arr.get(i);//k==27
-                        int j = i;//j==2
-                        while (j > 0 && arr.get(j - 1) > k) {// true in true
-                            arr.set(j, arr.get(j - 1));//index 2,index 1
-                            j = j - 1;//j==1
-                        }
-                        arr.set(j, k);
-                        arr.print(i);
-                    }
-
-
-                } else if (izpis.equals("down")) {
-                    arr.print(0);
-                    for (int i = 1; i < arr.size(); i++) {//i==2
-                        int k = arr.get(i);//k==27
-                        int j = i;//j==2
-                        while (j > 0 && arr.get(j - 1) < k) {// true in true
-                            arr.set(j, arr.get(j - 1));//index 2,index 1
-                            j = j - 1;//j==1
-                        }
-                        arr.set(j, k);
-                        arr.print(i);
-                    }
-
-                }
-
-
-            } else if (nacin.equals("count")) {
-
-
-                if (izpis.equals("up")) {
-                    for (int i = 1; i < arr.size(); i++) {
+                    if(nacin.equals("trace")) arr.print(0);
+                   for (int i = 1; i < arr.size(); i++) {
+                       arr.primerjave++;
                         int k = arr.get(i);
                         arr.premiki++;
                         int j = i;
@@ -189,11 +161,13 @@ class Array {
                             j = j - 1;
                         }
                         arr.set(j, k);
-                        arr.premiki++;
+                       arr.premiki++;
+                        if(nacin.equals("trace"))  arr.print(i);
                     }
 
 
                 } else if (izpis.equals("down")) {
+                    if(nacin.equals("trace")) arr.print(0);
                     for (int i = 1; i < arr.size(); i++) {
                         int k = arr.get(i);
                         arr.premiki++;
@@ -206,15 +180,63 @@ class Array {
                         }
                         arr.set(j, k);
                         arr.premiki++;
+                        if(nacin.equals("trace"))   arr.print(i);
                     }
+                    arr.primerjave++;
 
                 }
+        }
+        public static void insertionCount(String nacin,String izpis, Array arr) {
+            int premiki;
+            int primerjave;
+            if(izpis.equals("up")) {
+                arr.premiki = 0;
+                arr.primerjave = 0;
+                insertionSort( nacin,izpis,arr);
+                premiki=arr.getPremiki();
+                primerjave=arr.getPrimerjave();
+                System.out.printf("%-3d%-3d|", premiki, primerjave);
+                arr.premiki = 0;
+                arr.primerjave = 0;
+                insertionSort( nacin,izpis,arr);
+                premiki=arr.getPremiki();
+                primerjave=arr.getPrimerjave();
+                System.out.printf("%-3d%-3d|", premiki, primerjave);
+                arr.premiki = 0;
+                arr.primerjave = 0;
+                insertionSort( nacin,"down",arr);
+                premiki=arr.getPremiki();
+                primerjave=arr.getPrimerjave();
+                System.out.printf("%-3d",premiki);
+                System.out.printf("%-3d",primerjave);
+                System.out.println();
 
-
+            }else if(izpis.equals("down")){
+                arr.premiki = 0;
+                arr.primerjave = 0;
+                insertionSort( nacin,izpis,arr);
+                premiki=arr.getPremiki();
+                primerjave=arr.getPrimerjave();
+                System.out.printf("%-3d%-3d|", premiki, primerjave);
+                arr.premiki = 0;
+                arr.primerjave = 0;
+                insertionSort( nacin,izpis,arr);
+                premiki=arr.getPremiki();
+                primerjave=arr.getPrimerjave();
+                System.out.printf("%-3d%-3d|", premiki, primerjave);
+                arr.premiki = 0;
+                arr.primerjave = 0;
+                insertionSort( nacin,"up",arr);
+                premiki=arr.getPremiki();
+                primerjave=arr.getPrimerjave();
+                System.out.printf("%-3d",premiki);
+                System.out.printf("%-3d",primerjave);
+                System.out.println();
 
 
 
             }
+
 
 
         }
